@@ -1,0 +1,24 @@
+{
+  "name": "todoapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "todo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eslam-Nawara/TodoAPI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eslam-Nawara/TodoAPI/issues"
+  },
+  "homepage": "https://github.com/Eslam-Nawara/TodoAPI#readme",
+  "dependencies": {
+    "body": "^5.1.0",
+    "http": "^0.0.1-security"
+  }
+}
