@@ -1,12 +1,12 @@
 const http = require("http");
-var textBody = require("body");
+const jsonBody = require("body/json");
+const helpers = require("./helpers");
 
-http.createServer((request, response) => {
+const server = http.createServer((request, response) => {
     const { headers, method, url } = request;
-    textBody(request, response, (err, body) => {
+    jsonBody(request, response, (err, body) => {
         if (err) {
-            res.statusCode = 500;
-            return res.end("Invalid HTTP protocol");
+            helpers.sendResponse(response, 500, "Invalid HTTP protocol");
         }
         if (method === "GET" && url === "/todo") {
             //handle getAll tasks
@@ -19,9 +19,17 @@ http.createServer((request, response) => {
         } else if (method === "DELETE" && url === "/todo/{id}") {
             //handle deleteTask
         } else {
-            response.statusCode = 404;
-            response.end();
+            helpers.sendResponse(response, 404, "Invalid method");
         }
-        response.end(body);
+        response.end(JSON.stringify(body));
     });
-}).listen(8080);
+});
+
+try {
+    const { path, host, port } = helpers.extractServerInfo();
+    helpers.openDB(path);
+    server.listen(port);
+} catch {
+    console.log("Error: Failed to start the server");
+    process.exit(-1);
+}
