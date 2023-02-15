@@ -1,11 +1,11 @@
 const { PromisedDatabase } = require("promised-sqlite3"); // import the class
 const db = new PromisedDatabase();
 
-const GetTasks = (request, response) => {};
-const AddTask = (request, response) => {};
-const GetTask = (request, response) => {};
-const DeleteTask = (request, response) => {};
-const UpdateTask = (request, response) => {};
+const GetTasks = (req, res) => {};
+const AddTask = (req, res) => {};
+const GetTask = (req, res) => {};
+const DeleteTask = (req, res) => {};
+const UpdateTask = (req, res) => {};
 
 async function InitDatabase(path) {
     await db.open(path);
