@@ -1,33 +1,37 @@
 const http = require("http");
-const jsonBody = require("body/json");
-const helpers = require("./helpers");
 
-const server = http.createServer((request, response) => {
-    const { headers, method, url } = request;
-    jsonBody(request, response, (err, body) => {
-        if (err) {
-            helpers.sendResponse(response, 500, "Invalid HTTP protocol");
-        }
-        if (method === "GET" && url === "/todo") {
-            //handle getAll tasks
-        } else if (method === "POST" && url === "/todo") {
-            //handle addTask
-        } else if (method === "PATCH" && url === "/todo/{id}") {
-            //handle editTask
-        } else if (method === "GET" && url === "/todo/{id}") {
-            //handle getTask
-        } else if (method === "DELETE" && url === "/todo/{id}") {
-            //handle deleteTask
-        } else {
-            helpers.sendResponse(response, 404, "Invalid method");
-        }
-        response.end(JSON.stringify(body));
-    });
+const helpers = require("./helpers");
+const handlers = require("./handlers");
+
+const server = http.createServer((req, res) => {
+    if (req.url.split("/")[1] !== "todo") {
+        handlers.SendResponse(res, 404, "Invalid URL");
+        return;
+    }
+    switch (req.method) {
+        case "GET":
+            if (req.url.split("/")[2] != null) handlers.GetTask(req, res);
+            else handlers.GetTasks(req, res);
+            break;
+        case "POST":
+            handlers.AddTask(req, res);
+            break;
+        case "PATCH":
+            handlers.UpdateTask(req, res);
+            break;
+        case "DELETE":
+            handlers.DeleteTask(req, res);
+            break;
+        default:
+            handlers.SendResponse(res, 405, "Method Not Allowed");
+            return;
+    }
+    res.end();
 });
 
 try {
     const { path, host, port } = helpers.extractServerInfo();
-    helpers.openDB(path);
+    handlers.InitDatabase(path);
     server.listen(port);
 } catch {
     console.log("Error: Failed to start the server");
