@@ -1,4 +1,3 @@
-
 const getAllTasks = (req, res) => {};
 const addTask = (req, res) => {};
 const getTask = (req, res) => {};
