@@ -1,6 +1,6 @@
 const http = require("http");
+require("dotenv").config();
 
-const helpers = require("./helpers");
 const handlers = require("./handlers");
 
 const server = http.createServer((req, res) => {
@@ -30,9 +30,8 @@ const server = http.createServer((req, res) => {
 });
 
 try {
-    const { path, host, port } = helpers.extractServerInfo();
-    handlers.InitDatabase(path);
-    server.listen(port);
+    handlers.InitDatabase(process.env.DB_PATH);
+    server.listen(process.env.PORT);
 } catch {
     console.log("Error: Failed to start the server");
     process.exit(-1);
