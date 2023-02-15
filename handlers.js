@@ -1,7 +1,7 @@
 const { PromisedDatabase } = require("promised-sqlite3"); // import the class
 const db = new PromisedDatabase();
 
-const GetTasks = (req, res) => {};
+const GetAllTasks = (req, res) => {};
 const AddTask = (req, res) => {};
 const GetTask = (req, res) => {};
 const DeleteTask = (req, res) => {};
@@ -27,7 +27,7 @@ const SendResponse = (res, statusCode, responseBody) => {
 };
 
 module.exports = {
-    GetTasks,
+    GetAllTasks,
     AddTask,
     GetTask,
     DeleteTask,

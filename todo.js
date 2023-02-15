@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
     switch (req.method) {
         case "GET":
             if (req.url.split("/")[2] != null) handlers.GetTask(req, res);
-            else handlers.GetTasks(req, res);
+            else handlers.GetAllTasks(req, res);
             break;
         case "POST":
             handlers.AddTask(req, res);
