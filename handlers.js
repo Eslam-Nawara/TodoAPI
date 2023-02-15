@@ -22,8 +22,8 @@ const SendResponse = (res, statusCode, responseBody) => {
     if (responseBody) {
         res.setHeader("Content-Type", "application/json");
         res.write(responseBody);
-        res.end();
     }
+    res.end();
 };
 
 module.exports = {
