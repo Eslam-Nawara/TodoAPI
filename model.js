@@ -5,8 +5,8 @@ async function initDatabase(path) {
     await db.open(path);
     await db.createTable("todo", true, [
         "id INTEGER PRIMARY KEY AUTOINCREMENT",
-        "task TEXT NOT NULL",
-        "completed BOOLEAN NOT NULL",
+        "item TEXT NOT NULL",
+        "completed BOOLEAN DEFAULT false",
     ]);
 }
 
@@ -20,7 +20,7 @@ async function getAllTasks() {
 
 async function addTask(task) {
     const statement = await db.insert("todo", {
-        task: task.text,
+        item: task.item,
         completed: task.completed,
     });
     task.id = statement.lastID;
@@ -29,10 +29,10 @@ async function addTask(task) {
 
 async function updateTask(task) {
     await db.run(
-        "UPDATE todo SET task = $title, completed = $completed WHERE id = $id",
+        "UPDATE todo SET item = $item, completed = $completed WHERE id = $id",
         {
             $id: task.id,
-            $title: task.task,
+            $item: task.item,
             $completed: task.completed,
         }
     );
@@ -42,7 +42,7 @@ async function updateTask(task) {
 async function deleteTask(id) {
     await db.run("DELETE FROM todo WHERE id = ?", id);
 }
-export default {
+module.exports = {
     initDatabase,
     getTask,
     getAllTasks,
