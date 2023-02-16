@@ -5,7 +5,7 @@ const model = require("./model");
 require("dotenv").config();
 
 const server = http.createServer((req, res) => {
-    if (url.parse(req.url).path.slice(1).split("/")[0] != "todo") {
+    if (url.parse(req.url).path.slice(1).split("/")[0] !== "todo") {
         controllers.sendResponse(res, 404, "Invalid URL");
         return;
     }

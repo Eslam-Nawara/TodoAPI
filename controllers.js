@@ -4,8 +4,7 @@ const jsonBody = require("body/json");
 
 const getAllTasks = async (_req, res) => {
     const tasks = await database.getAllTasks();
-    const jsonData = JSON.stringify(tasks, null, "  ");
-    sendResponse(res, 200, jsonData);
+    sendResponse(res, 200, JSON.stringify(tasks));
 };
 
 const addTask = async (req, res) => {
